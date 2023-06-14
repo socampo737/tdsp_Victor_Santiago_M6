@@ -2,44 +2,39 @@
 
 ## Nombre del Proyecto
 
-[Nombre del proyecto aquí]
+[Proyecto Casas Cobranzas]
 
 ## Objetivo del Proyecto
 
-[Descripción breve del objetivo del proyecto y por qué es importante]
+[El objetivo será la optimización y mejora de la recuperación de impagos y clientes con una edad antigua en la deuda, constituida entre los 0 a 120 días, de acuerdo a su fase (Cobro amistoso – Recobro no amistoso – Fase 3 – Retención). La importancia del proyecto radica en ]
 
 ## Alcance del Proyecto
 
 ### Incluye:
 
-- [Descripción de los datos disponibles]
-- [Descripción de los resultados esperados]
-- [Criterios de éxito del proyecto]
+- [Los datos disponibles son una combinacion de variables divididas en dos segmentos. El primer segmento son los datos generales de cada uno de los clientes; algunos de ellos son codigo postal, NIF, edad, tipo cliente, etc. El segundo segmento son los datos correspondientes a todas las transacciones realizadas con el proveedor (Orange); algunos de ellos son ciclo de facturacion, total deuda, numero de facturas, numero de lineas, etc]
+- [Los resultados esperados son el incremento de un 4% sobre el indicador de % tasa de pago]
+- [Los criterios de exito del proyecto seran dos indicadores o KPI´s denominados (% tasa de pago y volumen de recaudo de la cartera)]
 
-### Excluye:
-
-- [Descripción de lo que no está incluido en el proyecto]
 
 ## Metodología
 
-[Descripción breve de la metodología que se utilizará para llevar a cabo el proyecto]
+[La metodologia a utilizar para el despliegue del proyecto será la CRISP-DM, debido a que nos permite en cada una de las fases, retroceder a los puntos anteriores necesarios, incluyendo la fases iniciale y la final]
 
 ## Cronograma
 
 | Etapa | Duración Estimada | Fechas |
 |------|---------|-------|
-| Entendimiento del negocio y carga de datos | 2 semanas | del 1 de mayo al 15 de mayo |
-| Preprocesamiento, análisis exploratorio | 4 semanas | del 16 de mayo al 15 de junio |
-| Modelamiento y extracción de características | 4 semanas | del 16 de junio al 15 de julio |
-| Despliegue | 2 semanas | del 16 de julio al 31 de julio |
-| Evaluación y entrega final | 3 semanas | del 1 de agosto al 21 de agosto |
+| Entendimiento del negocio y carga de datos | 1 semanas | del 30 de mayo al 06 de junio |
+| Preprocesamiento, análisis exploratorio | 1 semanas | del 7 de junio al 13 de junio |
+| Modelamiento y extracción de características | 1 semanas | del 14 de junio al 20 de junio |
+| Despliegue Evaluación y entrega final | 2 semanas | del 21 de junio al 1 de julio |
 
-Hay que tener en cuenta que estas fechas son de ejemplo, estas deben ajustarse de acuerdo al proyecto.
 
 ## Equipo del Proyecto
 
-- [Nombre y cargo del líder del proyecto]
-- [Nombre y cargo de los miembros del equipo]
+- [Victor Hugo Angel Ochoa - Data Science]
+- [Santiago Ocampo Salazar - Data Analyst Senior]
 
 ## Presupuesto
 
@@ -47,12 +42,11 @@ Hay que tener en cuenta que estas fechas son de ejemplo, estas deben ajustarse d
 
 ## Stakeholders
 
-- [Nombre y cargo de los stakeholders del proyecto]
-- [Descripción de la relación con los stakeholders]
-- [Expectativas de los stakeholders]
+- [Eva Campanero - Directora General]
+- [Jony Esteban Osorio - Director Analitica y Estrategia de Negocios]
+- [Relación directa con las direcciones de la compañia, encargadas de evaluar en tiempo, forma y resultados la viabilidad de los proyectos de principio a fin]
+- [Incremento del %MB (Margen Bruto) a traves del incremento de las tasas de pago de la cartera de clientes en mora sumado al incremento del recaudo con los clientes categorizados como top]
 
 ## Aprobaciones
 
-- [Nombre y cargo del aprobador del proyecto]
-- [Firma del aprobador]
-- [Fecha de aprobación]
+- [Roman Garces - Director BPI (Business Process Improvement)]
