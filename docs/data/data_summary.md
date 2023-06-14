@@ -4,24 +4,40 @@ Este documento contiene los resultados del análisis exploratorio de datos.
 
 ## Resumen general de los datos
 
-En esta sección se presenta un resumen general de los datos. Se describe el número total de observaciones, variables, el tipo de variables, la presencia de valores faltantes y la distribución de las variables.
+Resumen general de los datos
+Número total de observaciones: 7339
+Variables: 25
+Tipo de variables: categoricas, numericas y fechas
+Valores faltantes: existen valores faltantes en las variables EMAIL 2195, EDAD 252, PERMANENCIA 7273, VPT 267, FECHA_BPI 4171, TIPO_DOCUMENTO 5659, CODIGO_POSTAL 33, FEU 616,
+
+Toda la informacion relacionada se encuentra en los script de Python
 
 ## Resumen de calidad de los datos
 
-En esta sección se presenta un resumen de la calidad de los datos. Se describe la cantidad y porcentaje de valores faltantes, valores extremos, errores y duplicados. También se muestran las acciones tomadas para abordar estos problemas.
+Las acciones tomadas para los valores extremos, outliers y demas estan basadas en los resultados del boxplot, donde a traves de la desviacion estandar se realizan las imputaciones.
 
 ## Variable objetivo
 
-En esta sección se describe la variable objetivo. Se muestra la distribución de la variable y se presentan gráficos que permiten entender mejor su comportamiento.
-
-## Variables individuales
-
-En esta sección se presenta un análisis detallado de cada variable individual. Se muestran estadísticas descriptivas, gráficos de distribución y de relación con la variable objetivo (si aplica). Además, se describen posibles transformaciones que se pueden aplicar a la variable.
+La variable objetivo a estimar corresponde al "TARGET" y es una variable de tipo numerica discreta, su grafico y analisis se encuentran en el script.
 
 ## Ranking de variables
 
-En esta sección se presenta un ranking de las variables más importantes para predecir la variable objetivo. Se utilizan técnicas como la correlación, el análisis de componentes principales (PCA) o la importancia de las variables en un modelo de aprendizaje automático.
+Se relaciona el ranking de variables posterior a realizar las transformaciones y eliminacion de variables no aportantes por datos faltantes o por la alta cardinalidad en las variables como se puede observar en el grafico de correlacion visualizado en el script.
 
-## Relación entre variables explicativas y variable objetivo
+N°  Column              Non-Null Count  Dtype  
+---  ------              --------------  -----  
+ 0   CANTIDAD_FACTURAS | 7339 non-null | int64  
+ 1   IMPORTE_FACTURA   | 7335 non-null | float64
+ 2   ESCENARIO_RECOBRO | 7339 non-null | int64  
+ 3   DEUDA_TOTAL       | 7339 non-null | float64
+ 4   PORTADO           | 7339 non-null | int64  
+ 5   EDAD              | 7087 non-null | object 
+ 6   TARGET            | 7339 non-null | int64  
+ 7   VPT               | 7339 non-null | int64  
+ 8   CODIGO_POSTAL     | 7339 non-null | float64
+ 9   NUM_LINEAS_ACTIVAS| 7339 non-null | int64  
+ 10  ESTADO_CLIENTE    | 7339 non-null | int64  
+ 11  VAP_SCF           | 7339 non-null | int64  
+ 12  VAP_OB            | 7339 non-null | int64  
+ 13  BAJA              | 7339 non-null | int64  
 
-En esta sección se presenta un análisis de la relación entre las variables explicativas y la variable objetivo. Se utilizan gráficos como la matriz de correlación y el diagrama de dispersión para entender mejor la relación entre las variables. Además, se pueden utilizar técnicas como la regresión lineal para modelar la relación entre las variables.
