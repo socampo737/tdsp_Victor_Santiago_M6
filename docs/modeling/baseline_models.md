@@ -1,39 +1,31 @@
 # Reporte del Modelo Baseline
 
-Este documento contiene los resultados del modelo baseline.
-
 ## Descripción del modelo
 
-El modelo baseline es el primer modelo construido y se utiliza para establecer una línea base para el rendimiento de los modelos posteriores.
+Posterior a realizar la busqueda exaustiva de un modelo base en el estado del arte con ayuda de paginas como Hugging Face o interacciones con chat GPT, que cumpla con el objetivo de mejorar las tasas de cobro; Decidimos utilizar un modelo base basado en una red neuronal secuencial con una primera capa densa de 8 neuronas para los datos de entrada, una capa densa intermedia de 4 neuronas cuya funcion de activacion es relu y por ultimo 1 capa densa de salida cuya funcion de activacion es sigmoide.
 
 ## Variables de entrada
 
-Lista de las variables de entrada utilizadas en el modelo.
+Como variables de entrada se utilizan 16 variables tranformadas para el modelo, resaltando la conversion de variables categoricas a numericas.
 
 ## Variable objetivo
 
-Nombre de la variable objetivo utilizada en el modelo.
+Como variable objetivo se utiliza el "TARGET" que traduce si se realizó o no el pago de la deuda.
 
 ## Evaluación del modelo
 
 ### Métricas de evaluación
 
-Descripción de las métricas utilizadas para evaluar el rendimiento del modelo.
+Las metricas de evaluación utilizadas son el accuracy o exactitud.
 
 ### Resultados de evaluación
 
-Tabla que muestra los resultados de evaluación del modelo baseline, incluyendo las métricas de evaluación.
-
-## Análisis de los resultados
-
-Descripción de los resultados del modelo baseline, incluyendo fortalezas y debilidades del modelo.
+accuracy: 0.6835
 
 ## Conclusiones
 
-Conclusiones generales sobre el rendimiento del modelo baseline y posibles áreas de mejora.
+La conclusion para este modelo base es que a pesar de tener un valor aceptable de exactutud, es necesario realizar una busqueda optima de hiperparametros que nos permita ejecutar con diferentes alternativas los modelos de redes neuronales y que al final a traves de la busqueda de los mejores hiperparametros, realizar la comparación entre las metricas del modelo base vs las metricas del modelo principal con los ajustes mencionados.
 
 ## Referencias
 
-Lista de referencias utilizadas para construir el modelo baseline y evaluar su rendimiento.
-
-Espero que te sea útil esta plantilla. Recuerda que puedes adaptarla a las necesidades específicas de tu proyecto.
+Proyecto de redes neuronales realizado en el modulo 5 del diplomado.
