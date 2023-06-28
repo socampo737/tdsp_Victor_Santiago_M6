@@ -1,22 +1,33 @@
-# Despliegue de modelos
 
-## Infraestructura
+www\.\w+\.\w+
+redirect\/post\/\d+
 
-- **Nombre del modelo:** (nombre que se le ha dado al modelo)
-- **Plataforma de despliegue:** (plataforma donde se va a desplegar el modelo)
-- **Requisitos técnicos:** (lista de requisitos técnicos necesarios para el despliegue, como versión de Python, bibliotecas de terceros, hardware, etc.)
-- **Requisitos de seguridad:** (lista de requisitos de seguridad necesarios para el despliegue, como autenticación, encriptación de datos, etc.)
-- **Diagrama de arquitectura:** (imagen que muestra la arquitectura del sistema que se utilizará para desplegar el modelo)
 
-## Código de despliegue
+entendimiento del negocio
+obtencion de corpus
+analisis de los corpus
+desarrollo del aplicativo
+test aplicativo
+puesta en produccion
 
-- **Archivo principal:** (nombre del archivo principal que contiene el código de despliegue)
-- **Rutas de acceso a los archivos:** (lista de rutas de acceso a los archivos necesarios para el despliegue)
-- **Variables de entorno:** (lista de variables de entorno necesarias para el despliegue)
 
-## Documentación del despliegue
+Romain Robbes
+José A. Pino
+Margarita Serei
+René Peralta
+Jornadas Chilenas
+Pablo Barceló
+Gonzalo Navarro
+Jérémy Barbay
+Omar Larré
+José Rafael Correa
 
-- **Instrucciones de instalación:** (instrucciones detalladas para instalar el modelo en la plataforma de despliegue)
-- **Instrucciones de configuración:** (instrucciones detalladas para configurar el modelo en la plataforma de despliegue)
-- **Instrucciones de uso:** (instrucciones detalladas para utilizar el modelo en la plataforma de despliegue)
-- **Instrucciones de mantenimiento:** (instrucciones detalladas para mantener el modelo en la plataforma de despliegue)
+
+
+
+Tokenizacion: El proceso de tokenizado consiste en separar el texto en unidades lógicas (caracteres, palabras, oraciones).
+Normalización de textos: En muchos idiomas tenemos caracteres modificadores de vocales o letras. Por ejemplo, en español tenemos las tildes y la letra "ñ"; o en el caso del portugués tenemos tres tipos de acentos.
+Limpieza con expresiones regulares: Comúnmente se suelen aplicar expresiones regulares para eliminar caracteres o secuencias de caracteres no deseadas.
+Lematización: En algunas aplicaciones no es de importancia la conjugación de las palabras (tiempo, plurales, géneros, ...), por lo cual, se suele transformar el texto a sus versiones lematizadas.
+Filtrado de palabras: podemos eliminar todas las palabras que sean stopwords, para ello definimos una condición
+Modificaciones en la grafía: Normalmente, los textos se suelen procesar en minúsculas. Con esto eliminamos modificadores relacionados con el inicio de un texto, palabras capitalizadas luego de signos de puntuación, entre otras cosas.
