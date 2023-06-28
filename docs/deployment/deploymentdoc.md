@@ -24,7 +24,7 @@
 - **Instrucciones de configuración:** Configurar el endpoint suministrado por el área de analítica en la plataforma de producción, con el fin de que devuelva la clasificación del cliente como pagados o no pagador.
 - **Instrucciones de uso:** Para el despliegue en el servidor se pone en producción la aplicación creada en un servidor que ejecute Python y se llama el endpoint pasando como parametro las variables para el proceso de clasificación.
 - **Instrucciones de mantenimiento:** El modelo sera actualizado con una periodicidad mensual mediante el envío de un archivo PKL con el modelo.
-- **Ejemplo endpoint:** http://127.0.0.1:5000/prediccion?er=EMP&po=NO&vt=S&cp=8029&ec=A&vf=N&vb=N&fb=202310&ed=NaN&cf=3&im=263.68&dt=1000.82&nl=12
+- **Ejemplo endpoint:** "http://127.0.0.1:5000/prediccion?er=EMP&po=NO&vt=S&cp=8029&ec=A&vf=N&vb=N&fb=202310&ed=NaN&cf=3&im=263.68&dt=1000.82&nl=12"
     donde
 	er = ESCENARIO_RECOBRO
     po = PORTADO
