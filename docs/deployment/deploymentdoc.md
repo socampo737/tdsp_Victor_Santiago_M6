@@ -10,7 +10,9 @@
 	Software: Windows 11 Home Single Language (Sistema operativo de 64 bits), Wing PRO 9
 	Hardware: AMD Ryzen 7 4800H with Radeon Graphics 2.90 GHz, RAM 8,00 GB
 - **Requisitos de seguridad:** Al tratarse de datos previamente estudiados y eliminados por la compañia por sensibilidad de la informacion, no es necesario su encriptación
-- **Diagrama de arquitectura:** (imagen que muestra la arquitectura del sistema que se utilizará para desplegar el modelo)
+- **Diagrama de arquitectura:**
+  ![image](https://github.com/socampo737/tdsp_Victor_Santiago_M6/assets/125618328/35f90532-286b-41cd-810c-dd89450c5195)
+
 
 ## Código de despliegue
 
