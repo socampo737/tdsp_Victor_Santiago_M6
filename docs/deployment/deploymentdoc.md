@@ -14,8 +14,8 @@
 
 ## Código de despliegue
 
-- **Archivo principal:** La aplicación diseñada se encuentra en el archivo denominado Deployment.py
-- **Rutas de acceso a los archivos:** La ruta de acceso a los archivos es tdsp_Victor_Santiago_M6/src/nombre_paquete
+- **Archivo principal:** La aplicación diseñada se encuentra en el archivo denominado deployment_flask.py
+- **Rutas de acceso a los archivos:** La ruta de acceso a los archivos es tdsp_Victor_Santiago_M6/docs/deployment
 
 
 ## Documentación del despliegue
