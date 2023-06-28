@@ -24,6 +24,7 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split, cross_val_score
 import imblearn
 from imblearn.over_sampling import SMOTE
+from sklearn.ensemble import RandomForestClassifier
 
 from keras.models import Sequential
 from keras.layers import Dense
@@ -325,6 +326,10 @@ sns.pairplot(df3[lista_numericas], hue='TARGET')
 
 sns.heatmap(df2.corr(), annot=True, cmap="icefire")
 
+
+
+sns.heatmap(df2.corr(), annot=False, cmap="icefire")
+
 # SEPARACION DE X Y
 df3_X = df3.drop("TARGET", axis=1)
 df3_y = df3["TARGET"]
@@ -338,20 +343,13 @@ df4_X = pd.DataFrame(df3_X_escalado, columns=df3_X.columns)
 
 df4_X.sample(5)
 
-X_ent, X_pru, y_ent, y_pru = train_test_split(df4_X,
-                                              df3_y,
-                                              test_size=0.2,
-                                              random_state=1)
-
-print(X_ent.shape, X_pru.shape, y_ent.shape, y_pru.shape)
-
 # OBSERVACIONES POR CATEFORIA EN LA VARIABLE TARGET
-sns.countplot(x='TARGET', data=pd.DataFrame(y_ent))
+sns.countplot(x='TARGET', data=pd.DataFrame(df3_y))
 
 plt.title("Datos desbalanceados");
 
 # DATOS TOTALES SIN BALANCEAR
-print(Counter(y_ent))
+print(Counter(df3_y))
 
 """Como podemos ver la cantidad de observaciones de las dos categorías es bastante diferente, si hacemos el modelo con estas cantidades posiblemente obtendremos buena Exactitud ya que el modelo clasifica bien los registros de forma global, pero observando detenidamente nos daremos cuenta que el modelo está clasificando de buena forma la clase mayoritaria mientras que la clase minoritaria sería clasificada pobremente.
 Para evitar este problema debemos usar un método que balancee las clases o que aplique una penalización sobre las mismas. Para nuestro caso balanceamos la variable usando el método SMOTE (Synthetic Minority Over-sample Tecnique) que nos permitirá crear registros sintéticos para la clase minoritaria.
@@ -359,113 +357,64 @@ Para evitar este problema debemos usar un método que balancee las clases o que 
 
 # BALANCE DE VARIABLE TARGET (OVERSAMPLING)
 oversample = SMOTE()      # SMOTE(sampling_strategy=0.1)
-X_ent_bal, y_ent_bal = oversample.fit_resample(X_ent, y_ent)
+X_bal, y_bal = oversample.fit_resample(df4_X, df3_y)
 
 # OBSERVACIONES POR CATEFORIA EN LA VARIABLE TARGET DESPUES DEL BALANCE
-sns.countplot(x='TARGET', data=pd.DataFrame(y_ent_bal))
+sns.countplot(x='TARGET', data=pd.DataFrame(y_bal))
 
 plt.title("Datos balanceados");
 
 # DATOS TOTALES SIN BALANCEAR
-print(Counter(y_ent_bal))
+print(Counter(y_bal))
 
 # EJEMPLO DE LOS DATOS
-X_ent_bal.sample(10)
+X_bal.sample(10)
 
-X_ent_bal.info()
+X_bal.info()
 
-y_ent_bal.info()
+# DIVISION DE LA MUESTRA EN DATASET DE ENTRENAMIENTO Y PRUEBA (80%, 20%)
+X_ent, X_pru, y_ent, y_pru = train_test_split(X_bal,
+                                              y_bal,
+                                              test_size=0.2,
+                                              random_state=1)
+
+print(X_ent.shape, X_pru.shape, y_ent.shape, y_pru.shape)
+
+y_ent.info()
 
 y_pru.info()
 
 #NUMERO DE VARIABLES
-nvars = X_ent_bal.shape[1]
+nvars = X_ent.shape[1]
+nvars
 
-# CREACION DEL MODELO Y ADICION DE CAPAS
-model_RMSprop = Sequential()
-model_RMSprop.add(Dense(8, input_dim=nvars))
-model_RMSprop.add(Dense(4, activation='relu'))
-model_RMSprop.add(Dense(1, activation='sigmoid'))
+# RANDOM FOREST
 
-# COMPILACION DEL MODELO CON OPTIMIZADOR RMSprop, VALIDACION CRUZADA Y METRICA ACCURACY
-model_RMSprop.compile(optimizer='RMSprop',
-              loss='binary_crossentropy',
-              metrics=['accuracy'])
+modelo_base = RandomForestClassifier(criterion='gini', n_estimators=500, max_depth=10, random_state=123)
 
-# RESUMEN DEL MODELO
-model_RMSprop.summary()
+modelo_base.fit(X_ent, y_ent)
 
-#
-history = model_RMSprop.fit(X_ent_bal,
-                            y_ent_bal,
-                            epochs=40,
-                            validation_data=(X_pru, y_pru),
-                            batch_size=32)
+#y_pred = modelo_base.predict(X_pru)
 
-from plotly.subplots import make_subplots
-import plotly.graph_objects as go
+print("Entrenamiento: {:.1f}".format(100*modelo_base.score(X_ent, y_ent)))
 
-def plot_all(history):
-  fig1 = go.Figure()
-  fig1.add_trace(go.Scattergl(y=history.history['accuracy'], name='Train'))
-  fig1.add_trace(go.Scattergl(y=history.history['val_accuracy'], name='Valid'))
-  fig1.update_layout(height=300, width=400,xaxis_title='Epoch',yaxis_title='accuracy')
+print("Prueba: {:.1f}".format(100*modelo_base.score(X_pru, y_pru)))
 
-  fig2 = go.Figure()
-  fig2.add_trace(go.Scattergl(y=history.history['loss'], name='Train'))
-  fig2.add_trace(go.Scattergl(y=history.history['val_loss'], name='Valid'))
-  fig2.update_layout(height=300, width=400,xaxis_title='Epoch', yaxis_title='Loss')
-
-  return [fig1,fig2]
-
-fig1,fig2=plot_all(history)
-fig1.show()
-fig2.show()
-
-"""## **Entrenamiento del Modelo y Selección de Hiperparámetros**
-
-"""
-
+# ENTRENAMIENTO DEL MODELO Y SELECCION DE HIPERPARAMETROS
 !pip install -q -U keras-tuner
 import keras_tuner
 from keras.optimizers import Adam
 
-def model_builder(hp):
-
-  model = Sequential()
-
-  hp_units_1 = hp.Int('dense_1_units', min_value=9, max_value=27, step=3)     #  default = 12
-
-  hp_units_2 = hp.Int('dense_2_units', min_value=32, max_value=512, step=32)
-
-  hp_units_3 = hp.Int('dense_3_units', min_value=32, max_value=512, step=32)
-
-  model.add(Dense(units=hp_units_1, activation='relu'))
-
-  model.add(Dense(units=hp_units_2, activation='relu'))
-
-  model.add(Dense(units=hp_units_3, activation='relu'))
-
-  model.add(Dense(1, activation='sigmoid'))
-
-  hyperparameter_learning_rate = hp.Choice('learning_rate', values=(1e-2, 1e-3, 1e-4, 1e-5))
-
-  model.compile(optimizer=Adam(learning_rate=hyperparameter_learning_rate),
-                loss='binary_crossentropy',
-                metrics=['accuracy'])
-
-  return model
-
 tuner = keras_tuner.RandomSearch(
-                     model_builder,             # Función para construir hipermodelos
-                     objective='val_accuracy',  # Métrica que buscamos optimizar
-                     directory='runs',          # Directorio donde guardaremos los logs y resultados de los experimentos
+                     model_builder,
+                     objective='val_accuracy',
+                     directory='runs',
                      project_name='keras_tuner',
                      overwrite=True)
 
 tuner.search_space_summary()
 
-tuner.search(X_ent_bal, y_ent_bal, epochs=50, validation_split=.2, verbose=True)
+tuner.search(X_ent, y_ent, epochs=50, validation_split=.2, verbose=True)
 
 # OBTENEMOS EL MEJOR MODELO
 best_model = tuner.get_best_models()[0]
@@ -480,13 +429,9 @@ best_hyperparameters.get("learning_rate")
 # CONSTRUIMOS UN MODELO CON LOS MEJORES HIPERPARAMETROS
 model = tuner.hypermodel.build(best_hyperparameters)
 
-# ENTRENAMOS EL MODELO CON LOS MEJORES HIPERPARAMETROS POR 50 EPOCHS
+# ENTRENAMOS EL MODELO CON LOS MEJORES HIPERPARAMETROS POR 50 EPOCHS Y VALIDACION DEL 20%
 
-history = model.fit(X_ent_bal,
-                            y_ent_bal,
-                            epochs=50,
-                            validation_split=.2,
-                            batch_size=32)
+history = model.fit(X_ent,y_ent, epochs=50, validation_split=.2, batch_size=32)
 
 # EXTRAIGAMOS EL NUMERO OPTIMO DE ITERACIONES A ENTRENAR EL MODELO
 best_epoch = history.history['val_accuracy'].index(max(history.history['val_accuracy'])) + 1
@@ -494,13 +439,7 @@ print(f'Número óptimo de epochs: {best_epoch}')
 
 # ENTRENEMOS UN MODELO CON LOS MEJORES HIPERPARAMETROS Y EL MEJOR NUMERO DE EPOCHS
 best_model = tuner.hypermodel.build(best_hyperparameters)
-best_model.fit(X_ent_bal,
-                y_ent_bal,
-                epochs=best_epoch,
-                validation_split=.2,
-                batch_size=32)
-
-"""## **Evaluación o Aplicación del modelo**"""
+best_model.fit(X_ent, y_ent, epochs=best_epoch, validation_split=.2, batch_size=32)
 
 # EVALUEMOS EL MODELO SOBRE LOS DATOS DE PRUEBAS
 result = best_model.evaluate(X_pru, y_pru, verbose=0)
