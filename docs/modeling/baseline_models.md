@@ -2,7 +2,7 @@
 
 ## Descripción del modelo
 
-Posterior a realizar la busqueda exaustiva de un modelo base en el estado del arte con ayuda de paginas como Hugging Face o interacciones con chat GPT, que cumpla con el objetivo de mejorar las tasas de cobro; Decidimos utilizar un modelo base basado en una red neuronal secuencial con una primera capa densa de 8 neuronas para los datos de entrada, una capa densa intermedia de 4 neuronas cuya funcion de activacion es relu y por ultimo 1 capa densa de salida cuya funcion de activacion es sigmoide.
+Posterior a realizar la busqueda exaustiva de un modelo base en el estado del arte con ayuda de paginas como Hugging Face o interacciones con chat GPT, que cumpla con el objetivo de mejorar las tasas de cobro; decidimos utilizar un modelo base correspondiente a un Random Forest, que actualmente es utilizado en distintas verticales de negocio para clasificar clientes, arrojando resultados de exactitud lo suficientemente buenos para cumplir con el objetivo.
 
 ## Variables de entrada
 
