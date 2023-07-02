@@ -7,9 +7,13 @@
 ## Objetivo del Proyecto
 
 [El objetivo del proyecto será la optimización y mejora de la recuperación de impagos sobre clientes con una edad antigua en la deuda (0 a 120 días), constituidas entre las siguientes fases:
+
 Fase 1 o cobro amistoso (0-30 días)
+
 Fase 2 o cobro no amistoso (30-60 días)
+
 Fase 3 o retención (60-90 días)
+
 Fase 4 o cobro jurídico (90-120 días)
 
 Donde a través de modelos predictivos se clasifiquen los cliente de acuerdo a la propensión al pago de las deudas. La importancia del proyecto radica en el incremento del margen bruto del servicio para la compañía.]
@@ -46,10 +50,12 @@ Donde a través de modelos predictivos se clasifiquen los cliente de acuerdo a l
 ## Stakeholders
 
 - [Nombre y cargo de los stakeholders del proyecto:
+
 Eva Campanero - Directora General
+
 Jony Esteban Osorio - Director Analítica y Estrategia de Negocios]
 - [La relación con los Stakeholders es directa, ya que son los encargados de evaluar en tiempo / forma los resultados y viabilidad de los proyectos de principio a fin.]
-- [Las expectativas de los Stakeholders son el incremento del %MB (Margen Bruto) a traves del incremento de las tasas de pago de la cartera de clientes en mora sumado al incremento del recaudo con los clientes clasificados como top.]
+- [Las expectativas de los Stakeholders son el incremento del %MB (Margen Bruto) a través del incremento de las tasas de pago de la cartera de clientes en mora sumado al incremento del recaudo con los clientes clasificados como top.]
 
 ## Aprobaciones
 
