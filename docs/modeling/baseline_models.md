@@ -56,6 +56,9 @@ accuracy: 0.799
 
 ![image](https://github.com/socampo737/tdsp_Victor_Santiago_M6/assets/125618328/a06a1ad3-5fe1-4fdc-bb17-9fcd4acf2aff)
 
+## Análisis de los resultados
+
+Como se observa en los resultados de la evaluación podemos indicar que el modelo base cuenta con una exactitud destacada correspondiente a un 80%, lo que nos indica que tiene la capacidad de clasificar con cierta facilidad, de forma correcta y con un margen de error mínimo los clientes propensos a pagar sus deudas sin superar los días de mora en la fase que se encuentren.   
 
 ## Conclusiones
 
