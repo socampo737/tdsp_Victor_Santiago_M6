@@ -9,7 +9,9 @@ El problema a solucionar se basa en la mejora de la recuperación de impagos sob
 Se realizarán los siguientes ajustes en busca de obtener el mejor resultado ejecutando diferentes alternativas en cuanto a modelos predictivos.
 
 - Se determina realizar una red neuronal secuencial que a través de la búsqueda de los mejores hiperparámetros (learning rate, capas, neuronas) nos permita evidenciar el mejor resultado posible de exactitud.
+
 - Adicional al punto anterior se busca el numero óptimo de épocas que acompañará la optimización de la red neuronal.
+
 - Como resultado de tener los mejores hiperparámetros, el resumen del modelo es una red neuronal secuencial con una primera capa densa de 24 neuronas para los datos de entrada, dos capas densas intermedias de 64 y 288 neuronas y por último una capa densa de salida para un total de 21017 parámetros.
 
 
@@ -31,5 +33,7 @@ El resultado de la métrica utilizada es un accuracy: 0.6108
 - De acuerdo con el desarrollo del ejercicio donde es primordial ejecutar diferentes modelos con el fin de encontrar el resultado optimo. Recomendamos buscar en los casos que aplique, los mejores hiperparámetros para customizar cada modelo en busca de conseguir los máximos resultados de las métricas a evaluar.
 
 ## Referencias
+
+Algoritmos y modelos utilizados actualmente en la compañía (Random Forest).
 
 Proyecto de redes neuronales realizado en el módulo 5 del diplomado.
