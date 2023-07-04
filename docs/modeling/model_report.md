@@ -2,20 +2,34 @@
 
 ## Descripción del Problema
 
-El problema a solucionar se basa en la optimización y mejora de la recuperación de impagos y clientes con una edad antigua en la deuda que está constituida entre los 0 a 120 días, de acuerdo a su fase (Cobro amistoso – Recobro no amistoso – Fase 3 – Retención). El contexto en el que se encuentra dicho proyecto son los Recobros carterizados que se realizan vía contact center con estrategias de omnicanalidad (Telefonía, Chat, redes sociales, canales de autoconsumo, etc. Con la implementacion del modelo de redes neuronales se lograra tener una cartera diferenciada y segmentada por los clientes con mayor propensión al pago con el fin de diseñar estrategias que permitan optimizar la gestión de los recobros
+El problema a solucionar se basa en la mejora de la recuperación de impagos sobre clientes con una edad antigua en la deuda. El contexto en el que se encuentra dicho proyecto son los Recobros carterizados que se realizan vía contact center con estrategias de omnicanalidad (Telefonía, Chat, redes sociales, canales de autoconsumo, etc. Con la implementación del modelo de redes neuronales se logrará tener una cartera diferenciada y segmentada por los clientes con mayor propensión al pago con el fin de diseñar estrategias que permitan optimizar la gestión de los recobros.
 
 ## Descripción del Modelo
 
-Como resultado de tener los mejores hiperparametros, utilizamos una red neuronal secuencial con una primera capa densa de 9 neuronas para los datos de entrada, dos capas densas intermedias de 352 y 224 neuronas, y por ultimo una capa densa de salida.
+Se realizarán los siguientes ajustes en busca de obtener el mejor resultado ejecutando diferentes alternativas en cuanto a modelos predictivos.
+
+- Se determina realizar una red neuronal secuencial que a través de la búsqueda de los mejores hiperparámetros (learning rate, capas, neuronas) nos permita evidenciar el mejor resultado posible de exactitud.
+- Adicional al punto anterior se busca el numero óptimo de épocas que acompañará la optimización de la red neuronal.
+- Como resultado de tener los mejores hiperparámetros, el resumen del modelo es una red neuronal secuencial con una primera capa densa de 24 neuronas para los datos de entrada, dos capas densas intermedias de 64 y 288 neuronas y por último una capa densa de salida para un total de 21017 parámetros.
+
 
 ## Evaluación del Modelo
 
-El resultado de la metrica utilizada es un accuracy: 0.6935
+El resultado de la métrica utilizada es un accuracy: 0.7122
+
+![image](https://github.com/socampo737/tdsp_Victor_Santiago_M6/assets/125618328/094fa434-dd33-4216-a9e7-8ab0b0f71393)
+
+El resultado de la métrica utilizada es un accuracy: 0.6108
+
+![image](https://github.com/socampo737/tdsp_Victor_Santiago_M6/assets/125618328/ef4687e7-9f2e-4477-bdf0-baf11dc1375e)
+
 
 ## Conclusiones y Recomendaciones
 
-Posterior a implementar el base line con optimizadores y cambios en el numero de capas aleatorio, el modelo evoluciona con la utilizacion de KerasTuner que nos ayuda a evaluar los modelos con hiperparametros diferente como los son el learning rate, las neuronas, las epocas, entre otros. Asi logramos tener despues de una cantidad de iteraciones significativas, el mejor modelo con el cual se lograra tener la mayor exactitud cercana al 70% y perdida cercana al 54%.
+- Como podemos observar el resultado de la exactitud en el modelo de redes neuronales con los mejores hiperparametros, es inferior en un 9% respecto al modelo Random Forest ejecutado como modelo base, lo que nos indica que en este caso se presenta el principio de parsimonia, debido a que la teoría más simple de ejecutar tiene mayor probabilidad de ser la correcta.
+
+- De acuerdo con el desarrollo del ejercicio donde es primordial ejecutar diferentes modelos con el fin de encontrar el resultado optimo. Recomendamos buscar en los casos que aplique, los mejores hiperparámetros para customizar cada modelo en busca de conseguir los máximos resultados de las métricas a evaluar.
 
 ## Referencias
 
-Proyecto de redes neuronales realizado en el modulo 5 del diplomado.
+Proyecto de redes neuronales realizado en el módulo 5 del diplomado.
