@@ -64,4 +64,5 @@ La conclusión para este modelo base es que a pesar de tener un valor sobresalie
 ## Referencias
 
 Algoritmos y modelos utilizados actualmente en la compañía (Random Forest).
+
 Proyecto de redes neuronales realizado en el módulo 5 del diplomado.
