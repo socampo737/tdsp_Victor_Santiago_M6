@@ -330,14 +330,28 @@ sns.heatmap(df2.corr(), annot=False, cmap="icefire")
 df3_X = df3.drop("TARGET", axis=1)
 df3_y = df3["TARGET"]
 
-# ESCALADO DE VARIABLES NUMERICAS
-modelo_sc = MinMaxScaler()
+df3_X[["CANTIDAD_FACTURAS", "IMPORTE_FACTURA", "DEUDA_TOTAL", "CODIGO_POSTAL", "NUM_LINEAS_ACTIVAS"]]
 
-df3_X_escalado = modelo_sc.fit_transform(df3_X)
+# MAXIMOS DE LAS VARIABLES
+print(df3_X["CANTIDAD_FACTURAS"].max())
+print(df3_X["IMPORTE_FACTURA"].max())
+print(df3_X["DEUDA_TOTAL"].max())
+print(df3_X["CODIGO_POSTAL"].max())
+print(df3_X["NUM_LINEAS_ACTIVAS"].max())
 
-df4_X = pd.DataFrame(df3_X_escalado, columns=df3_X.columns)
+def escalado(x, maximo):
+  return x / maximo
 
-df4_X.sample(5)
+# ESCALADO DE VARIABLES
+df3_X["CANTIDAD_FACTURAS"] = [escalado(x, 3.5) for x in df3_X["CANTIDAD_FACTURAS"]]
+df3_X["IMPORTE_FACTURA"] = [escalado(x, 314.24) for x in df3_X["IMPORTE_FACTURA"]]
+df3_X["DEUDA_TOTAL"] = [escalado(x, 628.83) for x in df3_X["DEUDA_TOTAL"]]
+df3_X["CODIGO_POSTAL"] = [escalado(x, 52) for x in df3_X["CODIGO_POSTAL"]]
+df3_X["NUM_LINEAS_ACTIVAS"] = [escalado(x, 2.5) for x in df3_X["NUM_LINEAS_ACTIVAS"]]
+
+df3_X
+
+df3_X.shape
 
 # OBSERVACIONES POR CATEFORIA EN LA VARIABLE TARGET
 sns.countplot(x='TARGET', data=pd.DataFrame(df3_y))
@@ -353,7 +367,7 @@ Para evitar este problema debemos usar un método que balancee las clases o que 
 
 # BALANCE DE VARIABLE TARGET (OVERSAMPLING)
 oversample = SMOTE()      # SMOTE(sampling_strategy=0.1)
-X_bal, y_bal = oversample.fit_resample(df4_X, df3_y)
+X_bal, y_bal = oversample.fit_resample(df3_X, df3_y)
 
 # OBSERVACIONES POR CATEFORIA EN LA VARIABLE TARGET DESPUES DEL BALANCE
 sns.countplot(x='TARGET', data=pd.DataFrame(y_bal))
