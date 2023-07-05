@@ -25,6 +25,7 @@ from sklearn.model_selection import train_test_split, cross_val_score
 import imblearn
 from imblearn.over_sampling import SMOTE
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import RocCurveDisplay
 
 from keras.models import Sequential
 from keras.layers import Dense
@@ -85,6 +86,8 @@ df.info()
 # EJEMPLO DE LOS DATOS DEL DATASET
 df.head()
 
+df.isnull().sum()
+
 # TAMAÑO DEL DATASET
 print("Numero de filas: ", df.shape[0])
 print("Numero de variables: ", df.shape[1])
@@ -118,6 +121,9 @@ df2["TARGET"].value_counts().plot(kind='barh', width=0.7, edgecolor='black')
 df2["ESTADO_CLIENTE"].value_counts().plot(kind='pie', autopct='%.2f%%', wedgeprops={"linewidth": 2, "edgecolor": "white"})
 
 sns.histplot(data=df2, x="CANTIDAD_FACTURAS", bins=10, kde=True)
+
+boxplot = df2.boxplot(column=['DEUDA_TOTAL'])
+boxplot.plot()
 
 # ANALISIS DE VARIABLE PERMANENCIA
 Counter(df2.PERMANENCIA)
@@ -409,3 +415,7 @@ modelo_base.fit(X_ent, y_ent)
 print("Entrenamiento: {:.1f}".format(100*modelo_base.score(X_ent, y_ent)))
 
 print("Prueba: {:.1f}".format(100*modelo_base.score(X_pru, y_pru)))
+
+ax = plt.gca()
+rfc_disp = RocCurveDisplay.from_estimator(modelo_base, X_pru, y_pru, ax=ax, alpha=0.8)
+plt.show()

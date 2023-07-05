@@ -9,6 +9,8 @@ Original file is located at
 ##Modelo Principal / Main Model
 """
 
+!pip install -q -U keras-tuner
+
 import math
 import numpy as np
 import pandas as pd
@@ -18,16 +20,29 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from google.colab import drive
 import os
+import plotly.graph_objects as go
+import keras_tuner
+import plotly.graph_objects as go
+
+from sklearn.decomposition import PCA
+from sklearn.ensemble import RandomForestClassifier
 
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split, cross_val_score
 import imblearn
 from imblearn.over_sampling import SMOTE
-from sklearn.ensemble import RandomForestClassifier
+from plotly.subplots import make_subplots
+from keras.optimizers import Adam
+from plotly.subplots import make_subplots
+from sklearn.metrics import RocCurveDisplay
 
 from keras.models import Sequential
 from keras.layers import Dense
+
+# ESCALADO DE VARIABLES
+def escalado(x, maximo):
+  return x / maximo
 
 # CALCULO DE LOS BIGOTES DE UNA LISTA DE VALORES
 
@@ -66,6 +81,58 @@ def columnas_vacias(dff, porcentaje):
 # columnas_vacias(40)
 # columnas_vacias(df_nueva, 10)
 
+def build_model(hp):
+  model = Sequential()
+
+  model.add(Dense(hp.Choice('units', [8, 16, 32, 64]), activation='relu'))
+
+  #model.add(Dense(hp.Choice('units2', [8, 16, 32]), activation='relu'))
+
+  model.add(Dense(1, activation='sigmoid'))
+
+  model.compile(loss='binary_crossentropy')
+
+  return model
+
+def plot_all(history):
+  fig1 = go.Figure()
+  fig1.add_trace(go.Scattergl(y=history.history['accuracy'], name='Train'))
+  fig1.add_trace(go.Scattergl(y=history.history['val_accuracy'], name='Valid'))
+  fig1.update_layout(height=300, width=400,xaxis_title='Epoch',yaxis_title='accuracy')
+
+  fig2 = go.Figure()
+  fig2.add_trace(go.Scattergl(y=history.history['loss'], name='Train'))
+  fig2.add_trace(go.Scattergl(y=history.history['val_loss'], name='Valid'))
+  fig2.update_layout(height=300, width=400,xaxis_title='Epoch', yaxis_title='Loss')
+
+  return [fig1,fig2]
+
+def model_builder(hp):
+
+  model = Sequential()
+
+  hp_units_1 = hp.Int('dense_1_units', min_value=9, max_value=27, step=3)     #  default = 12
+
+  hp_units_2 = hp.Int('dense_2_units', min_value=32, max_value=512, step=32)
+
+  hp_units_3 = hp.Int('dense_3_units', min_value=32, max_value=512, step=32)
+
+  model.add(Dense(units=hp_units_1, activation='relu'))
+
+  model.add(Dense(units=hp_units_2, activation='relu'))
+
+  model.add(Dense(units=hp_units_3, activation='relu'))
+
+  model.add(Dense(1, activation='sigmoid'))
+
+  hyperparameter_learning_rate = hp.Choice('learning_rate', values=(1e-2, 1e-3, 1e-4, 1e-5))
+
+  model.compile(optimizer=Adam(learning_rate=hyperparameter_learning_rate),
+                loss='binary_crossentropy',
+                metrics=['accuracy'])
+
+  return model
+
 # PREPARA Google Drive
 drive.mount('/gdrive')
 
@@ -84,6 +151,8 @@ df.info()
 
 # EJEMPLO DE LOS DATOS DEL DATASET
 df.head()
+
+df.isnull().sum()
 
 # TAMAÑO DEL DATASET
 print("Numero de filas: ", df.shape[0])
@@ -113,11 +182,14 @@ df2.info()
 #OBTENEMOS LOS VALORES ESTADISTICOS BASICOS DE CADA UNA DE LAS VARIABLES
 df2.describe()
 
-df2["TARGET"].value_counts().plot(kind='barh', width=0.7, edgecolor='black')
+df2["TARGET"].value_counts().plot(kind='barh', ylabel='TARGET', width=0.7, edgecolor='black')
 
 df2["ESTADO_CLIENTE"].value_counts().plot(kind='pie', autopct='%.2f%%', wedgeprops={"linewidth": 2, "edgecolor": "white"})
 
 sns.histplot(data=df2, x="CANTIDAD_FACTURAS", bins=10, kde=True)
+
+boxplot = df2.boxplot(column=['DEUDA_TOTAL'])
+boxplot.plot()
 
 # ANALISIS DE VARIABLE PERMANENCIA
 Counter(df2.PERMANENCIA)
@@ -324,24 +396,29 @@ lista_numericas = ["CANTIDAD_FACTURAS", "IMPORTE_FACTURA", "DEUDA_TOTAL", "NUM_L
 
 sns.pairplot(df3[lista_numericas], hue='TARGET')
 
-sns.heatmap(df2.corr(), annot=True, cmap="icefire")
-
-
-
 sns.heatmap(df2.corr(), annot=False, cmap="icefire")
 
 # SEPARACION DE X Y
 df3_X = df3.drop("TARGET", axis=1)
 df3_y = df3["TARGET"]
 
-# ESCALADO DE VARIABLES NUMERICAS
-modelo_sc = MinMaxScaler()
+df3_X[["CANTIDAD_FACTURAS", "IMPORTE_FACTURA", "DEUDA_TOTAL", "CODIGO_POSTAL", "NUM_LINEAS_ACTIVAS"]]
 
-df3_X_escalado = modelo_sc.fit_transform(df3_X)
+# MAXIMOS DE LAS VARIABLES
+print(df3_X["CANTIDAD_FACTURAS"].max())
+print(df3_X["IMPORTE_FACTURA"].max())
+print(df3_X["DEUDA_TOTAL"].max())
+print(df3_X["CODIGO_POSTAL"].max())
+print(df3_X["NUM_LINEAS_ACTIVAS"].max())
 
-df4_X = pd.DataFrame(df3_X_escalado, columns=df3_X.columns)
+# ESCALADO DE VARIABLES
+df3_X["CANTIDAD_FACTURAS"] = [escalado(x, 3.5) for x in df3_X["CANTIDAD_FACTURAS"]]
+df3_X["IMPORTE_FACTURA"] = [escalado(x, 314.24) for x in df3_X["IMPORTE_FACTURA"]]
+df3_X["DEUDA_TOTAL"] = [escalado(x, 628.83) for x in df3_X["DEUDA_TOTAL"]]
+df3_X["CODIGO_POSTAL"] = [escalado(x, 52) for x in df3_X["CODIGO_POSTAL"]]
+df3_X["NUM_LINEAS_ACTIVAS"] = [escalado(x, 2.5) for x in df3_X["NUM_LINEAS_ACTIVAS"]]
 
-df4_X.sample(5)
+df3_X.shape
 
 # OBSERVACIONES POR CATEFORIA EN LA VARIABLE TARGET
 sns.countplot(x='TARGET', data=pd.DataFrame(df3_y))
@@ -357,7 +434,7 @@ Para evitar este problema debemos usar un método que balancee las clases o que 
 
 # BALANCE DE VARIABLE TARGET (OVERSAMPLING)
 oversample = SMOTE()      # SMOTE(sampling_strategy=0.1)
-X_bal, y_bal = oversample.fit_resample(df4_X, df3_y)
+X_bal, y_bal = oversample.fit_resample(df3_X, df3_y)
 
 # OBSERVACIONES POR CATEFORIA EN LA VARIABLE TARGET DESPUES DEL BALANCE
 sns.countplot(x='TARGET', data=pd.DataFrame(y_bal))
@@ -400,10 +477,9 @@ print("Entrenamiento: {:.1f}".format(100*modelo_base.score(X_ent, y_ent)))
 
 print("Prueba: {:.1f}".format(100*modelo_base.score(X_pru, y_pru)))
 
-# ENTRENAMIENTO DEL MODELO Y SELECCION DE HIPERPARAMETROS
-!pip install -q -U keras-tuner
-import keras_tuner
-from keras.optimizers import Adam
+ax = plt.gca()
+rfc_disp = RocCurveDisplay.from_estimator(modelo_base, X_pru, y_pru, ax=ax, alpha=0.8)
+plt.show()
 
 tuner = keras_tuner.RandomSearch(
                      model_builder,
@@ -447,3 +523,7 @@ print(f'Pérdida de prueba: {result[0]}')
 print(f'Exactitud de prueba: {result[1] * 100:.2f}%')
 
 best_model.summary()
+
+fig1,fig2=plot_all(history)
+fig1.show()
+fig2.show()
