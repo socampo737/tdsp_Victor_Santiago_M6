@@ -16,9 +16,6 @@ Ruta o carpeta almacenada en el repositorio Github tdsp_Victor_Santiago_M6/src, 
 
 Los logros alcanzados son el correcto versionamiento e implementación de cada una de las fases del proyecto en una plataforma que nos permita administrar y documentar de forma correcta la evolución de los mismos. Esto garantiza que los equipos de trabajo puedan identificar metodologías, estrategias, seguimientos y especificidades requeridas para el desarrollo adecuado.
 
-- Evaluación del modelo final y comparación con el modelo base.
-- Descripción de los resultados y su relevancia para el negocio.
-
 ## Lecciones aprendidas
 
 - Los desafíos y obstáculos encontrados en el proyecto fueron la transformación y las técnicas utilizadas para preprocesamiento de las variables. Adicional a ello otro cuello de botella fue la investigación de un modelo en el estado del arte que pueda relacionarse con el objetivo del proyecto actual.
