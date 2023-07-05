@@ -2,11 +2,43 @@
 
 ## Descripción del modelo
 
-Posterior a realizar la busqueda exaustiva de un modelo base en el estado del arte con ayuda de paginas como Hugging Face o interacciones con chat GPT, que cumpla con el objetivo de mejorar las tasas de cobro; decidimos utilizar un modelo base correspondiente a un Random Forest, que actualmente es utilizado en distintas verticales de negocio para clasificar clientes, arrojando resultados de exactitud lo suficientemente buenos para cumplir con el objetivo.
+Posterior a realizar la búsqueda exhaustiva de un modelo base en el estado del arte con ayuda de páginas como Hugging Face o interacciones con chat GPT, que cumpla con el objetivo de mejorar las tasas de cobro, no fue posible tener resultados de coincidencias con estas características; por ello decidimos utilizar un modelo base correspondiente a un Random Forest, que actualmente es utilizado por el equipo de trabajo en distintas verticales de negocio (ventas, retenciones, etc) para clasificar clientes, arrojando resultados de exactitud lo suficientemente buenos para cumplir con el objetivo.
 
 ## Variables de entrada
 
-Como variables de entrada se utilizan 16 variables tranformadas para el modelo, resaltando la conversion de variables categoricas a numericas.
+Como variables de entrada se utilizan 16 variables transformadas para el modelo, resaltando la conversión de variables categóricas a numéricas.
+
+CANTIDAD_FACTURAS - float64
+
+IMPORTE_FACTURA - float64
+
+ESCENARIO_RECOBRO - int64
+
+DEUDA_TOTAL - float64
+
+PORTADO - int64
+
+VPT - int64
+
+CODIGO_POSTAL - float64
+
+NUM_LINEAS_ACTIVAS - float64
+
+ESTADO_CLIENTE - int64
+
+VAP_SCF - int64
+
+VAP_OB - int64
+
+BAJA - int64
+
+0_30 - float64
+
+31_50 - float64
+
+51_65 - float64
+
+MAYOR_65 - float64
 
 ## Variable objetivo
 
@@ -16,18 +48,24 @@ Como variable objetivo se utiliza el "TARGET" que traduce si se realizó o no el
 
 ### Métricas de evaluación
 
-Las metricas de evaluación utilizadas son el accuracy o exactitud.
+Las métricas de evaluación utilizadas son el accuracy o exactitud.
 
 ### Resultados de evaluación
 
-accuracy: 0.6835
+accuracy: 0.799
 
-![image](https://github.com/socampo737/tdsp_Victor_Santiago_M6/assets/125618328/a47fc71a-73cb-44bb-b015-db2d61685514)
+![image](https://github.com/socampo737/tdsp_Victor_Santiago_M6/assets/125618328/a06a1ad3-5fe1-4fdc-bb17-9fcd4acf2aff)
+
+## Análisis de los resultados
+
+Como se observa en los resultados de la evaluación podemos indicar que el modelo base cuenta con una exactitud destacada correspondiente a un 80%, lo que nos indica que tiene la capacidad de clasificar con cierta facilidad, de forma correcta y con un margen de error mínimo los clientes propensos a pagar sus deudas sin superar los días de mora en la fase que se encuentren.   
 
 ## Conclusiones
 
-La conclusion para este modelo base es que a pesar de tener un valor aceptable de exactutud, es necesario realizar una busqueda optima de hiperparametros que nos permita ejecutar con diferentes alternativas los modelos de redes neuronales y que al final a traves de la busqueda de los mejores hiperparametros, realizar la comparación entre las metricas del modelo base vs las metricas del modelo principal con los ajustes mencionados.
+La conclusión para este modelo base es que a pesar de tener un valor sobresaliente de exactitud, es necesario realizar una búsqueda optima de hiperparámetros que nos permita ejecutar con diferentes alternativas el modelo Random Forest. Así con el valor del modelo base (0.799) vs el modelo con los mejores hiperparámetros realizar la comparación directa en la exactitud con el modelo principal.
 
 ## Referencias
 
-Proyecto de redes neuronales realizado en el modulo 5 del diplomado.
+Algoritmos y modelos utilizados actualmente en la compañía (Random Forest).
+
+Proyecto de redes neuronales realizado en el módulo 5 del diplomado.
